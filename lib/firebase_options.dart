@@ -59,5 +59,4 @@ class DefaultFirebaseOptions {
     projectId: 'bridal-jwell',
     storageBucket: 'bridal-jwell.firebasestorage.app',
   );
-
 }

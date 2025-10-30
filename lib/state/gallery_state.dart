@@ -5,7 +5,12 @@ import 'package:glimmer/services/firebase_storage_service.dart';
 
 class GalleryState extends ChangeNotifier {
   static const _kFavKey = 'favorite_item_ids';
-  static const categories = <String>['Necklaces', 'Earrings', 'Bangles', 'Bridal Sets'];
+  static const categories = <String>[
+    'Necklaces',
+    'Earrings',
+    'Bangles',
+    'Bridal Sets'
+  ];
 
   final FirebaseStorageService _storageService = FirebaseStorageService();
   List<JewelryItem> _items = [];
@@ -24,7 +29,8 @@ class GalleryState extends ChangeNotifier {
   }
 
   List<JewelryItem> get items => List.unmodifiable(_items);
-  List<JewelryItem> get favorites => _items.where((e) => _favoriteIds.contains(e.id)).toList(growable: false);
+  List<JewelryItem> get favorites =>
+      _items.where((e) => _favoriteIds.contains(e.id)).toList(growable: false);
   Set<String> get favoriteIds => _favoriteIds;
   String? get currentCategory => _currentCategory;
 

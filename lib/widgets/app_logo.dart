@@ -13,12 +13,17 @@ class AppLogo extends StatelessWidget {
       Container(
         width: size,
         height: size,
-        decoration: BoxDecoration(color: color.withValues(alpha: 0.08), shape: BoxShape.circle),
+        decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.08), shape: BoxShape.circle),
         child: Icon(Icons.workspace_premium, color: color, size: size * 0.56),
       ),
       if (showTitle) SizedBox(height: AppTokens.s16),
       if (showTitle)
-        Text('Bridal Jewelry Ideas', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Theme.of(context).colorScheme.onSurface))
+        Text('Bridal Jewelry Ideas',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: Theme.of(context).colorScheme.onSurface))
     ]);
   }
 }

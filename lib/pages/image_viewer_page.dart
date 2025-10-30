@@ -8,7 +8,8 @@ import 'package:glimmer/widgets/interstitial_ad_placeholder.dart';
 class ImageViewerPage extends StatefulWidget {
   final List<JewelryItem> items;
   final int initialIndex;
-  const ImageViewerPage({super.key, required this.items, required this.initialIndex});
+  const ImageViewerPage(
+      {super.key, required this.items, required this.initialIndex});
 
   @override
   State<ImageViewerPage> createState() => _ImageViewerPageState();
@@ -56,7 +57,15 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                     child: InteractiveViewer(
                       minScale: 0.8,
                       maxScale: 4,
-                      child: Image.network(item.imageUrl, fit: BoxFit.contain, width: double.infinity, height: double.infinity, loadingBuilder: (context, child, progress) => progress == null ? child : const Center(child: CircularProgressIndicator())),
+                      child: Image.network(item.imageUrl,
+                          fit: BoxFit.contain,
+                          width: double.infinity,
+                          height: double.infinity,
+                          loadingBuilder: (context, child, progress) =>
+                              progress == null
+                                  ? child
+                                  : const Center(
+                                      child: CircularProgressIndicator())),
                     ),
                   ),
                 ),
@@ -66,16 +75,26 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                   left: 8,
                   right: 8,
                   child: Row(children: [
-                    _TopIconButton(icon: Icons.close, onPressed: () => Navigator.pop(context)),
+                    _TopIconButton(
+                        icon: Icons.close,
+                        onPressed: () => Navigator.pop(context)),
                     const Spacer(),
-                    _TopIconButton(icon: isFav ? Icons.favorite : Icons.favorite_border, color: isFav ? Colors.red : Colors.white, onPressed: () => gallery.toggleFavorite(item.id)),
+                    _TopIconButton(
+                        icon: isFav ? Icons.favorite : Icons.favorite_border,
+                        color: isFav ? Colors.red : Colors.white,
+                        onPressed: () => gallery.toggleFavorite(item.id)),
                     const SizedBox(width: 8),
-                    _TopIconButton(icon: Icons.share_outlined, onPressed: () async {
-                      await Clipboard.setData(ClipboardData(text: item.imageUrl));
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Image link copied')));
-                      }
-                    }),
+                    _TopIconButton(
+                        icon: Icons.share_outlined,
+                        onPressed: () async {
+                          await Clipboard.setData(
+                              ClipboardData(text: item.imageUrl));
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Image link copied')));
+                          }
+                        }),
                   ]),
                 ),
                 // Bottom arrows
@@ -83,18 +102,24 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                   bottom: 24,
                   left: 24,
                   right: 24,
-                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    _NavPill(
-                      icon: Icons.chevron_left,
-                      enabled: _current > 0,
-                      onTap: () => _controller.previousPage(duration: const Duration(milliseconds: 260), curve: Curves.easeOut),
-                    ),
-                    _NavPill(
-                      icon: Icons.chevron_right,
-                      enabled: _current < items.length - 1,
-                      onTap: () => _controller.nextPage(duration: const Duration(milliseconds: 260), curve: Curves.easeOut),
-                    ),
-                  ]),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _NavPill(
+                          icon: Icons.chevron_left,
+                          enabled: _current > 0,
+                          onTap: () => _controller.previousPage(
+                              duration: const Duration(milliseconds: 260),
+                              curve: Curves.easeOut),
+                        ),
+                        _NavPill(
+                          icon: Icons.chevron_right,
+                          enabled: _current < items.length - 1,
+                          onTap: () => _controller.nextPage(
+                              duration: const Duration(milliseconds: 260),
+                              curve: Curves.easeOut),
+                        ),
+                      ]),
                 ),
               ]);
             },
@@ -113,7 +138,8 @@ class _TopIconButton extends StatelessWidget {
   final IconData icon;
   final Color? color;
   final VoidCallback onPressed;
-  const _TopIconButton({required this.icon, required this.onPressed, this.color});
+  const _TopIconButton(
+      {required this.icon, required this.onPressed, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +147,9 @@ class _TopIconButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.35), borderRadius: BorderRadius.circular(999)),
+        decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.35),
+            borderRadius: BorderRadius.circular(999)),
         child: Icon(icon, color: color ?? Colors.white),
       ),
     );
@@ -129,8 +157,11 @@ class _TopIconButton extends StatelessWidget {
 }
 
 class _NavPill extends StatelessWidget {
-  final IconData icon; final VoidCallback onTap; final bool enabled;
-  const _NavPill({required this.icon, required this.onTap, required this.enabled});
+  final IconData icon;
+  final VoidCallback onTap;
+  final bool enabled;
+  const _NavPill(
+      {required this.icon, required this.onTap, required this.enabled});
   @override
   Widget build(BuildContext context) {
     return Opacity(
@@ -139,7 +170,10 @@ class _NavPill extends StatelessWidget {
         onTap: enabled ? onTap : null,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999), border: Border.all(color: Colors.white.withValues(alpha: 0.4))),
+          decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: Colors.white.withValues(alpha: 0.4))),
           child: Icon(icon, color: Colors.white),
         ),
       ),

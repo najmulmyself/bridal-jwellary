@@ -7,7 +7,12 @@ class ImageGridTile extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onToggleFavorite;
   final bool isFavorite;
-  const ImageGridTile({super.key, required this.item, required this.onTap, required this.onToggleFavorite, required this.isFavorite});
+  const ImageGridTile(
+      {super.key,
+      required this.item,
+      required this.onTap,
+      required this.onToggleFavorite,
+      required this.isFavorite});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,10 @@ class ImageGridTile extends StatelessWidget {
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: radius,
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 16, offset: const Offset(0, 8)),
+                  BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 16,
+                      offset: const Offset(0, 8)),
                 ],
               ),
               child: ClipRRect(
@@ -43,13 +51,16 @@ class ImageGridTile extends StatelessWidget {
                       return Container(
                         color: Colors.black.withValues(alpha: 0.04),
                         alignment: Alignment.center,
-                        child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.primary)),
+                        child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).colorScheme.primary)),
                       );
                     },
                     errorBuilder: (context, error, stack) => Container(
                       color: Colors.black.withValues(alpha: 0.04),
                       alignment: Alignment.center,
-                      child: const Icon(Icons.broken_image, color: Colors.redAccent),
+                      child: const Icon(Icons.broken_image,
+                          color: Colors.redAccent),
                     ),
                   ),
                 ),
@@ -65,8 +76,11 @@ class ImageGridTile extends StatelessWidget {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.85), borderRadius: BorderRadius.circular(999)),
-              child: Icon(isFavorite ? Icons.favorite : Icons.favorite_border, color: isFavorite ? Colors.red : Colors.black),
+              decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.85),
+                  borderRadius: BorderRadius.circular(999)),
+              child: Icon(isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: isFavorite ? Colors.red : Colors.black),
             ),
           ),
         )

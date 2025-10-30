@@ -18,28 +18,36 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Bridal Jewelry', style: Theme.of(context).textTheme.titleLarge?.copyWith(color: cs.onSurface)),
+        title: Text('Bridal Jewelry',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: cs.onSurface)),
         actions: [
           IconButton(
             tooltip: 'Categories',
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CategoriesPage())),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const CategoriesPage())),
             icon: const Icon(Icons.category_outlined),
           ),
           IconButton(
             tooltip: 'Settings',
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SettingsPage())),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const SettingsPage())),
             icon: const Icon(Icons.settings_outlined),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FavoritesPage())),
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => const FavoritesPage())),
         backgroundColor: cs.primary,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: const Icon(Icons.favorite),
       ),
-      bottomNavigationBar: const BannerAdPlaceholder(margin: EdgeInsets.fromLTRB(16, 0, 16, 16)),
+      bottomNavigationBar:
+          const BannerAdPlaceholder(margin: EdgeInsets.fromLTRB(16, 0, 16, 16)),
       body: SafeArea(
         child: Consumer<GalleryState>(
           builder: (context, gallery, _) {
@@ -48,7 +56,11 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: GridView.builder(
                 itemCount: items.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 12, crossAxisSpacing: 12, childAspectRatio: 0.75),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: 0.75),
                 itemBuilder: (context, index) {
                   final item = items[index];
                   final fav = gallery.isFavorite(item.id);
@@ -68,6 +80,13 @@ class HomePage extends StatelessWidget {
   }
 
   void _openViewer(BuildContext context, List<JewelryItem> items, int index) {
-    Navigator.push(context, PageRouteBuilder(pageBuilder: (context, anim, __) => ImageViewerPage(items: items, initialIndex: index), transitionsBuilder: (context, anim, sec, child) => FadeTransition(opacity: anim, child: child), transitionDuration: const Duration(milliseconds: 250)));
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, anim, __) =>
+                ImageViewerPage(items: items, initialIndex: index),
+            transitionsBuilder: (context, anim, sec, child) =>
+                FadeTransition(opacity: anim, child: child),
+            transitionDuration: const Duration(milliseconds: 250)));
   }
 }
