@@ -37,7 +37,8 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
     if (showAd && mounted) setState(() => _showAd = true);
   }
 
-  Future<void> _downloadImage(BuildContext context, String imageUrl, String title) async {
+  Future<void> _downloadImage(
+      BuildContext context, String imageUrl, String title) async {
     try {
       // Show loading
       ScaffoldMessenger.of(context).showSnackBar(
@@ -52,7 +53,8 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
 
       // Get temporary directory
       final tempDir = await getTemporaryDirectory();
-      final fileName = '${title.replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final fileName =
+          '${title.replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}.jpg';
       final filePath = '${tempDir.path}/$fileName';
 
       // Save temporarily
@@ -138,7 +140,8 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                     const SizedBox(width: 8),
                     _TopIconButton(
                         icon: Icons.download_outlined,
-                        onPressed: () => _downloadImage(context, item.imageUrl, item.title)),
+                        onPressed: () =>
+                            _downloadImage(context, item.imageUrl, item.title)),
                     const SizedBox(width: 8),
                     _TopIconButton(
                         icon: Icons.share_outlined,
