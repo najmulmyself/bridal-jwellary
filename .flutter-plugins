@@ -1,4 +1,8 @@
 # This is a generated file; do not edit or check into version control.
+firebase_core=/Users/najmulmyself/.pub-cache/hosted/pub.dev/firebase_core-4.1.1/
+firebase_core_web=/Users/najmulmyself/.pub-cache/hosted/pub.dev/firebase_core_web-3.1.1/
+firebase_storage=/Users/najmulmyself/.pub-cache/hosted/pub.dev/firebase_storage-13.0.2/
+firebase_storage_web=/Users/najmulmyself/.pub-cache/hosted/pub.dev/firebase_storage_web-3.10.20/
 path_provider=/Users/najmulmyself/.pub-cache/hosted/pub.dev/path_provider-2.1.5/
 path_provider_android=/Users/najmulmyself/.pub-cache/hosted/pub.dev/path_provider_android-2.2.17/
 path_provider_foundation=/Users/najmulmyself/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/

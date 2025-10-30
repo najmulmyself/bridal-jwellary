@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1042881147437",
+    "project_id": "bridal-jwell",
+    "storage_bucket": "bridal-jwell.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042881147437:android:8549c55aad58e8e6ebbea4",
+        "android_client_info": {
+          "package_name": "com.mycompany.CounterApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjpwTiQ9BOxy2UUbS-V26GUmHXjYgDcWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
