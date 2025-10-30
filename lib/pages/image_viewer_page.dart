@@ -4,6 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:glimmer/models/jewelry_item.dart';
 import 'package:glimmer/state/gallery_state.dart';
 import 'package:glimmer/widgets/interstitial_ad_placeholder.dart';
+import 'package:dio/dio.dart';
+import 'package:gal/gal.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 class ImageViewerPage extends StatefulWidget {
   final List<JewelryItem> items;
@@ -31,6 +35,54 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
     setState(() => _current = index);
     final showAd = context.read<GalleryState>().registerSwipeAndShouldShowAd();
     if (showAd && mounted) setState(() => _showAd = true);
+  }
+
+  Future<void> _downloadImage(BuildContext context, String imageUrl, String title) async {
+    try {
+      // Show loading
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Downloading image...')),
+      );
+
+      // Download the image
+      var response = await Dio().get(
+        imageUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+
+      // Get temporary directory
+      final tempDir = await getTemporaryDirectory();
+      final fileName = '${title.replaceAll(' ', '_')}_${DateTime.now().millisecondsSinceEpoch}.jpg';
+      final filePath = '${tempDir.path}/$fileName';
+
+      // Save temporarily
+      final file = File(filePath);
+      await file.writeAsBytes(response.data);
+
+      // Save to gallery using gal
+      await Gal.putImage(filePath, album: 'Jewelry Gallery');
+
+      // Clean up temporary file
+      await file.delete();
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✅ Image saved to gallery!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -83,6 +135,10 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                         icon: isFav ? Icons.favorite : Icons.favorite_border,
                         color: isFav ? Colors.red : Colors.white,
                         onPressed: () => gallery.toggleFavorite(item.id)),
+                    const SizedBox(width: 8),
+                    _TopIconButton(
+                        icon: Icons.download_outlined,
+                        onPressed: () => _downloadImage(context, item.imageUrl, item.title)),
                     const SizedBox(width: 8),
                     _TopIconButton(
                         icon: Icons.share_outlined,

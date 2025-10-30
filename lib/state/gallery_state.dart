@@ -17,15 +17,36 @@ class GalleryState extends ChangeNotifier {
   final Set<String> _favoriteIds = <String>{};
   String? _currentCategory; // null means all
   int _swipeCount = 0;
+  bool _isLoading = true;
+  String? _errorMessage;
 
   GalleryState() {
     _loadFavorites();
     _fetchJewelryItems();
   }
 
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+
   Future<void> _fetchJewelryItems() async {
-    _items = await _storageService.getJewelryItems();
-    notifyListeners();
+    try {
+      _isLoading = true;
+      _errorMessage = null;
+      notifyListeners();
+
+      _items = await _storageService.getJewelryItems();
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _errorMessage = 'Failed to load images: $e';
+      notifyListeners();
+      debugPrint('Error fetching jewelry items: $e');
+    }
+  }
+
+  Future<void> retry() async {
+    await _fetchJewelryItems();
   }
 
   List<JewelryItem> get items => List.unmodifiable(_items);

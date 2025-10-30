@@ -51,7 +51,76 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Consumer<GalleryState>(
           builder: (context, gallery, _) {
+            // Loading state
+            if (gallery.isLoading) {
+              return Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(color: cs.primary),
+                    const SizedBox(height: 16),
+                    Text('Loading jewelry...',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
+              );
+            }
+
+            // Error state
+            if (gallery.errorMessage != null) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.error_outline, size: 64, color: cs.error),
+                      const SizedBox(height: 16),
+                      Text('Oops! Something went wrong',
+                          style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(height: 8),
+                      Text(gallery.errorMessage!,
+                          style: Theme.of(context).textTheme.bodySmall,
+                          textAlign: TextAlign.center),
+                      const SizedBox(height: 16),
+                      ElevatedButton.icon(
+                        onPressed: () => gallery.retry(),
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Retry'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
             final items = gallery.filteredItems;
+
+            // Empty state
+            if (items.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.image_not_supported_outlined,
+                          size: 64, color: cs.primary.withValues(alpha: 0.5)),
+                      const SizedBox(height: 16),
+                      Text('No jewelry found',
+                          style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(height: 8),
+                      Text(
+                          'Please check your Firebase Storage.\nImages should be in: jewelry/<category>/',
+                          style: Theme.of(context).textTheme.bodySmall,
+                          textAlign: TextAlign.center),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            // Grid view
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: GridView.builder(
